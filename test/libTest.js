@@ -4,7 +4,8 @@ const {
   getValidNeighbour,
   willAlive,
   getWorld,
-  getNextGeneration
+  getNextGeneration,
+  getNthGeneration
 } = require('../src/lib.js');
 
 const { deepEqual, ok } = require('assert');
@@ -101,5 +102,14 @@ describe('getNextGeneration',() => {
     let actualNextGen = getNextGeneration(currentGeneration,bounds);
     ok(isSame(actualNextGen,expectedNextGen));
     ok(isSameArity(actualNextGen,expectedNextGen));
+  });
+});
+
+describe("getNthGeneration",function() {
+    let currentGeneration = [[0,1],[0,2],[0,3]];
+    let expectedGen = []
+    let bounds = {topLeft: [1,1], bottomRight: [3,3]};
+  it("should work for current generation",function() {
+    deepEqual( getNthGeneration( currentGeneration, bounds, 0 ),currentGeneration);
   });
 });

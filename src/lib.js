@@ -72,3 +72,14 @@ const getNextGeneration = function ( currentGeneration, bounds ){
 }
 
 exports.getNextGeneration = getNextGeneration;
+
+const getNthGeneration = function( currentGen, bounds, genIndex ){
+  for( let index = 0; index < genIndex; index++ ){
+    let nextGen = getNextGeneration( currentGen, bounds );
+    currentGen = nextGen;
+  }
+  return currentGen;
+}
+
+exports.getNthGeneration = getNthGeneration;
+
