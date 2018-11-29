@@ -2,58 +2,43 @@ const getAdjacentNumbers = function( num ){
   return [ num-1, num, num+1 ];
 }
 
-exports.getAdjacentNumbers = getAdjacentNumbers;
-
 const increment = function( number=0 ){
-  return function(){
-    return number++;
-  }
+  return ()=>number++;
 }
 
-const createNumberSeries = function(limit, startingNumber=0){
-  let series = new Array(limit).fill("");
-  createSeries = increment( startingNumber );
-  return series.map(createSeries);
+const createNumberSeries = function( limit, startingNumber=0 ){
+  let series = new Array( limit ).fill( "" );
+  return series.map( increment( startingNumber ) );
 }
 
-exports.increment = increment;
-exports.createNumberSeries = createNumberSeries;
-
-const cycleGenerator = function(array,times){
+const cycleGenerator = function( array, times){
   let index = 0;
-  return function(){
-    let i = Math.floor((index++)/times);
-    return array[i%array.length];
-  }
+  return ()=>array[(Math.floor((index++)/times))%array.length];
 }
-
-exports.cycleGenerator = cycleGenerator;
 
 const isBetween = function( number1, number2, number3 ){
   return number1 <= number2 && number2 <= number3;
 }
 
-exports.isBetween = isBetween;
-
 const rowGenerator = function( rowLength ){
-  return function( rowNumber ){
-    let row = new Array( rowLength ).fill(0);
-    return row;
-  }
+  return ()=> new Array( rowLength ).fill(0);
 }
-
-exports.rowGenerator = rowGenerator;
 
 const createGrid = function( row, column ){
-  let createRow = rowGenerator( column );
-  let grid = createNumberSeries( row );
-  return grid.map(createRow);
+  return createNumberSeries( row ).map( rowGenerator( column ) );
 }
-
-exports.createGrid = createGrid;
 
 const contains = function( list, element ){
   return list.some(e=>e[0]===element[0] && e[1]===element[1]);
 }
 
-exports.contains = contains;
+module.exports = {
+  getAdjacentNumbers,
+  increment,
+  createNumberSeries,
+  cycleGenerator,
+  rowGenerator,
+  createGrid,
+  isBetween,
+  contains
+}

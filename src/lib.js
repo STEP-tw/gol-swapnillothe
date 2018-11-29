@@ -13,8 +13,6 @@ const neighbourValidator = function( bounds ){
   }
 }
 
-exports.neighbourValidator = neighbourValidator;
-
 const getAllNeighbour = function( position ){
   let neighbours = new Array(9).fill("").map(x=>[]);
   let adjcentNumbers = position.map(getAdjacentNumbers);
@@ -28,15 +26,11 @@ const getAllNeighbour = function( position ){
   return neighbours;
 }
 
-exports.getAllNeighbour = getAllNeighbour;
-
 const getValidNeighbour = function(  bounds, position ){
   let isValid = neighbourValidator( bounds );
   let neighbours = getAllNeighbour( position ).filter( isValid );
   return neighbours;
 }
-
-exports.getValidNeighbour = getValidNeighbour;
 
 const willAlive = function( previousState, bounds, cell ){
   let isAlive = contains.bind( null, previousState );
@@ -46,9 +40,6 @@ const willAlive = function( previousState, bounds, cell ){
   aliveNeighboursNo = getValidNeighbours( cell ).filter( isAlive ).length;
   return aliveConditions[ aliveSubConditions[ aliveNeighboursNo ] ];
 }
-
-exports.willAlive = willAlive;
-
 
 const getWorld = function( ...size ){
   let cordinates = [];
@@ -63,15 +54,11 @@ const getWorld = function( ...size ){
   return world;
 }
 
-exports.getWorld = getWorld;
-
 const getNextGeneration = function ( currentGeneration, bounds ){
   let world = getWorld( bounds["topLeft"], bounds["bottomRight"] );
   let testingAliveness = willAlive.bind( null, currentGeneration, bounds );
   return world.filter( testingAliveness );
 }
-
-exports.getNextGeneration = getNextGeneration;
 
 const getNthGeneration = function( currentGen, bounds, genIndex ){
   for( let index = 0; index < genIndex; index++ ){
@@ -81,5 +68,12 @@ const getNthGeneration = function( currentGen, bounds, genIndex ){
   return currentGen;
 }
 
-exports.getNthGeneration = getNthGeneration;
-
+module.exports = {
+  getAllNeighbour,
+  neighbourValidator,
+  getValidNeighbour,
+  willAlive,
+  getWorld,
+  getNextGeneration,
+  getNthGeneration
+}
