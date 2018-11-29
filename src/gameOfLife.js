@@ -1,5 +1,6 @@
+const { getNextGeneration } = require('./lib.js');
 const nextGeneration = function(currGeneration,bounds) {
-  // Implement code here
+  return getNextGeneration( currGeneration, bounds );
 }
 
 module.exports = { nextGeneration };

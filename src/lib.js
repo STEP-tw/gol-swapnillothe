@@ -64,3 +64,11 @@ const getWorld = function( ...size ){
 }
 
 exports.getWorld = getWorld;
+
+const getNextGeneration = function ( currentGeneration, bounds ){
+  let world = getWorld( bounds["topLeft"], bounds["bottomRight"] );
+  let testingAliveness = willAlive.bind( null, currentGeneration, bounds );
+  return world.filter( testingAliveness );
+}
+
+exports.getNextGeneration = getNextGeneration;
