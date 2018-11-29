@@ -3,10 +3,14 @@ const {
   neighbourValidator,
   getValidNeighbour,
   willAlive,
-  getWorld
+  getWorld,
+  getNextGeneration
 } = require('../src/lib.js');
 
-const { deepEqual } = require('assert');
+const { deepEqual, ok } = require('assert');
+const contains = (list,element) => list.some(e=>e[0]===element[0] && e[1]===element[1]);
+const isSame = (actualList,expectedList) => actualList.every(contains.bind(null,expectedList));
+const isSameArity = (actualList,expectedList) => actualList.length == expectedList.length;
 
 describe("getAllNeighbour",function() {
   it("should returns position of all 8 neighbours",function() {
@@ -70,5 +74,32 @@ describe("getWorld",function() {
   });
   it("should works for start with other than [0,0] and rectangle shape",function() {
     deepEqual( getWorld( [1,1],[2,3]),[[1,1],[1,2],[1,3],[2,1],[2,2],[2,3]]);
+  });
+});
+
+describe('getNextGeneration',() => {
+  it('should generate an empty generation for a current generation that contains only one live cell',() => {
+    let currentGeneration = [[0,1]];
+    let bounds = {topLeft: [0,0], bottomRight: [3,3]};
+    let actualNextGen = getNextGeneration(currentGeneration,bounds);
+    deepEqual(actualNextGen,[]);
+  });
+
+  it('should generate a vertical blinker as the next step of a horizontal blinker',() => {
+    let currentGeneration = [[0,1],[1,1],[2,1]];
+    let expectedNextGen = [[1,0],[1,1],[1,2]]
+    let bounds = {topLeft: [0,0], bottomRight: [3,3]};
+    let actualNextGen = getNextGeneration(currentGeneration,bounds);
+    ok(isSame(actualNextGen,expectedNextGen));
+    ok(isSameArity(actualNextGen,expectedNextGen));
+  });
+
+  it('should kill cells not within bounds',() => {
+    let currentGeneration = [[0,1],[0,2],[0,3]];
+    let expectedNextGen = []
+    let bounds = {topLeft: [1,1], bottomRight: [3,3]};
+    let actualNextGen = getNextGeneration(currentGeneration,bounds);
+    ok(isSame(actualNextGen,expectedNextGen));
+    ok(isSameArity(actualNextGen,expectedNextGen));
   });
 });
