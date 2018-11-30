@@ -5,7 +5,7 @@ const {
   contains,
   createNumberSeries,
   zipArrays
-} = require('../src/libUtil.js');
+} = require('./libUtil.js');
 
 const neighbourValidator = function( bounds, cell ){
   let isValid = isBetween(bounds["topLeft"][0],cell[0],bounds["bottomRight"][0]);
