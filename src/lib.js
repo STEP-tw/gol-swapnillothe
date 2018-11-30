@@ -8,8 +8,8 @@ const {
 } = require('../src/libUtil.js');
 
 const neighbourValidator = function( bounds, cell ){
-    let isValid = isBetween(bounds["topLeft"][0],cell[0],bounds["bottomRight"][0]);
-    return isValid && isBetween(bounds["topLeft"][1],cell[1],bounds["bottomRight"][1]);
+  let isValid = isBetween(bounds["topLeft"][0],cell[0],bounds["bottomRight"][0]);
+  return isValid && isBetween(bounds["topLeft"][1],cell[1],bounds["bottomRight"][1]);
 }
 
 const getAllNeighbour = function( position ){
@@ -45,12 +45,12 @@ const getNextGeneration = function ( currentGeneration, bounds ){
   return world.filter( testingAliveness );
 }
 
-const getNthGeneration = function( currentGen, bounds, genIndex ){
-  for( let index = 0; index < genIndex; index++ ){
-    let nextGen = getNextGeneration( currentGen, bounds );
-    currentGen = nextGen;
+const getNthGeneration = function( currentGeneration, bounds, n ){
+  for( let index = 0; index < n; index++ ){
+    let nextGeneration = getNextGeneration( currentGeneration, bounds );
+    currentGeneration = nextGeneration;
   }
-  return currentGen;
+  return currentGeneration;
 }
 
 module.exports = {
