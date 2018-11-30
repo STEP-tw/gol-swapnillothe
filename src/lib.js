@@ -34,15 +34,9 @@ const willAlive = function( previousState, bounds, cell ){
 }
 
 const getWorld = function( ...size ){
-  let noOfCells = (size[1][0]-size[0][0]+1)*(size[1][1]-size[0][1]+1);
-  let cordinates = [ createNumberSeries((size[1][0]-size[0][0]+1),size[0][0]) ];
-  cordinates[1] = createNumberSeries((size[1][1]-size[0][1]+1),size[0][1]);
-  let world = new Array(noOfCells).fill("").map(x=>[]);
-  let cycle1 = cycleGenerator(cordinates[0],cordinates[1].length);
-  world = world.map(x=>{x.push(cycle1());return x});
-  let cycle2 = cycleGenerator(cordinates[1],1);
-  world = world.map(x=>{x.push(cycle2());return x});
-  return world;
+  xCoOrdinates = createNumberSeries( (size[1][0]-size[0][0]+1), size[0][0] );
+  yCoOrdinates = createNumberSeries( (size[1][1]-size[0][1]+1),size[0][1] );
+  return zipArrays( [ xCoOrdinates, yCoOrdinates ] );
 }
 
 const getNextGeneration = function ( currentGeneration, bounds ){
