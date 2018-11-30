@@ -13,15 +13,8 @@ const neighbourValidator = function( bounds, cell ){
 }
 
 const getAllNeighbour = function( position ){
-  let neighbours = new Array(9).fill("").map(x=>[]);
-  let adjcentNumbers = position.map(getAdjacentNumbers);
-
-  let cycle = cycleGenerator(adjcentNumbers[0],3);
-  neighbours = neighbours.map(function(x) {x.push(cycle()); return x;});
-  cycle = cycleGenerator(adjcentNumbers[1],1);
-  neighbours = neighbours.map(function(x) {x.push(cycle()); return x;});
+  let neighbours = zipArrays( position.map( getAdjacentNumbers ) );
   neighbours.splice(4,1);
-
   return neighbours;
 }
 
