@@ -29,13 +29,13 @@ const willAlive = function( previousState, bounds, cell ){
   let getValidNeighbours = getValidNeighbour.bind( null, bounds );
   let aliveConditions = { 3 : true, 2 : isAlive( cell ), undefined : false };
   let aliveSubConditions = { 3 : 3, 2 : 2 };
-  aliveNeighboursNo = getValidNeighbours( cell ).filter( isAlive ).length;
+  let aliveNeighboursNo = getValidNeighbours( cell ).filter( isAlive ).length;
   return aliveConditions[ aliveSubConditions[ aliveNeighboursNo ] ];
 }
 
 const getWorld = function( ...size ){
-  xCoOrdinates = createNumberSeries( (size[1][0]-size[0][0]+1), size[0][0] );
-  yCoOrdinates = createNumberSeries( (size[1][1]-size[0][1]+1),size[0][1] );
+  let xCoOrdinates = createNumberSeries( (size[1][0]-size[0][0]+1), size[0][0] );
+  let yCoOrdinates = createNumberSeries( (size[1][1]-size[0][1]+1),size[0][1] );
   return zipArrays( [ xCoOrdinates, yCoOrdinates ] );
 }
 
