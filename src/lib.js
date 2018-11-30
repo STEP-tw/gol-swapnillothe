@@ -3,7 +3,8 @@ const {
   getAdjacentNumbers,
   cycleGenerator,
   contains,
-  createNumberSeries
+  createNumberSeries,
+  zipArrays
 } = require('../src/libUtil.js');
 
 const neighbourValidator = function( bounds, cell ){

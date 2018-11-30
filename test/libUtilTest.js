@@ -109,13 +109,13 @@ describe("contains",function() {
 
 describe("zipArrays",function() {
   it("should work for empty arrays",function() {
-    deepEqual( zipArrays( [],[] ), [] );
+    deepEqual( zipArrays( [ [], [] ] ), [] );
   });
   it("should work for arrays with same arity",function() {
-    deepEqual( zipArrays( [ 1, 2 ], [ 3, 4 ] ),[ [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ] ] );
+    deepEqual( zipArrays( [ [ 1, 2 ], [ 3, 4 ] ] ),[ [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ] ] );
   });
   it("should work for arrays with different arity",function() {
-    deepEqual( zipArrays( [ 1, 2 ], [ 3 ] ),[ [ 1, 3 ], [ 2, 3 ] ] );
+    deepEqual( zipArrays( [ [ 1, 2 ], [ 3 ] ] ),[ [ 1, 3 ], [ 2, 3 ] ] );
   });
 });
 
