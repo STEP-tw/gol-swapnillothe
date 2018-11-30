@@ -6,11 +6,9 @@ const {
   createNumberSeries
 } = require('../src/libUtil.js');
 
-const neighbourValidator = function( bounds ){
-  return function( cell ){
+const neighbourValidator = function( bounds, cell ){
     let isValid = isBetween(bounds["topLeft"][0],cell[0],bounds["bottomRight"][0]);
     return isValid && isBetween(bounds["topLeft"][1],cell[1],bounds["bottomRight"][1]);
-  }
 }
 
 const getAllNeighbour = function( position ){
@@ -27,7 +25,7 @@ const getAllNeighbour = function( position ){
 }
 
 const getValidNeighbour = function(  bounds, position ){
-  let isValid = neighbourValidator( bounds );
+  let isValid = neighbourValidator.bind( null, bounds );
   let neighbours = getAllNeighbour( position ).filter( isValid );
   return neighbours;
 }
@@ -42,9 +40,8 @@ const willAlive = function( previousState, bounds, cell ){
 }
 
 const getWorld = function( ...size ){
-  let cordinates = [];
   let noOfCells = (size[1][0]-size[0][0]+1)*(size[1][1]-size[0][1]+1);
-  cordinates[0] = createNumberSeries((size[1][0]-size[0][0]+1),size[0][0]);
+  let cordinates = [ createNumberSeries((size[1][0]-size[0][0]+1),size[0][0]) ];
   cordinates[1] = createNumberSeries((size[1][1]-size[0][1]+1),size[0][1]);
   let world = new Array(noOfCells).fill("").map(x=>[]);
   let cycle1 = cycleGenerator(cordinates[0],cordinates[1].length);

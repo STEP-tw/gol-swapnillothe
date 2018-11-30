@@ -20,12 +20,12 @@ describe("getAllNeighbour",function() {
 });
 
 describe("neighbourValidator",function() {
-  let isValidForZero = neighbourValidator({ topLeft : [ 0, 0 ], bottomRight : [ 3, 3 ] });
+  let isValidForZero = neighbourValidator.bind( null,{ topLeft : [ 0, 0 ], bottomRight : [ 3, 3 ] });
   it("should work for with topLeft [ 0, 0 ]",function() {
     deepEqual( isValidForZero( [ 2, 3 ] ), true );
     deepEqual( isValidForZero( [ 4, 3 ] ), false );
   });
-  let isValid = neighbourValidator({ topLeft : [ 1, 1 ], bottomRight : [ 3, 3 ] });
+  let isValid = neighbourValidator.bind( null,{ topLeft : [ 1, 1 ], bottomRight : [ 3, 3 ] });
   it("should work for with topLeft non zero elements array",function() {
     deepEqual( isValid( [ 2, 3 ] ), true );
     deepEqual( isValid( [ 0, 3 ] ), false );
