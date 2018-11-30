@@ -32,6 +32,12 @@ const contains = function( list, element ){
   return list.some(e=>e[0]===element[0] && e[1]===element[1]);
 }
 
+const zipArrays = function(set1,set2){
+  let zippedArray = [];
+  set1.map((x)=>{set2.map((y)=>{zippedArray.push([x,y]);});});
+  return zippedArray;
+}
+
 module.exports = {
   getAdjacentNumbers,
   increment,
@@ -40,5 +46,6 @@ module.exports = {
   rowGenerator,
   createGrid,
   isBetween,
-  contains
+  contains,
+  zipArrays
 }

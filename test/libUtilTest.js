@@ -6,7 +6,8 @@ const {
   rowGenerator,
   createGrid,
   isBetween,
-  contains
+  contains,
+  zipArrays
 } = require('../src/libUtil.js');
 
 const { deepEqual } = require('assert');
@@ -103,6 +104,18 @@ describe("contains",function() {
   it("should work",function() {
     deepEqual( contains( [ [ 1, 2 ], [ 2, 3 ] ], [ 2, 3 ] ), true );
     deepEqual( contains( [ [ 1, 2 ], [ 2, 3 ] ], [ 3, 3 ] ), false );
+  });
+});
+
+describe("zipArrays",function() {
+  it("should work for empty arrays",function() {
+    deepEqual( zipArrays( [],[] ), [] );
+  });
+  it("should work for arrays with same arity",function() {
+    deepEqual( zipArrays( [ 1, 2 ], [ 3, 4 ] ),[ [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ] ] );
+  });
+  it("should work for arrays with different arity",function() {
+    deepEqual( zipArrays( [ 1, 2 ], [ 3 ] ),[ [ 1, 3 ], [ 2, 3 ] ] );
   });
 });
 
