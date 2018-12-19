@@ -1,7 +1,6 @@
 const {
   isBetween,
   getAdjacentNumbers,
-  cycleGenerator,
   contains,
   createNumberSeries,
   zipArrays

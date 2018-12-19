@@ -11,11 +11,6 @@ const createNumberSeries = function( limit, startingNumber=0 ){
   return series.map( increment( startingNumber ) );
 }
 
-const cycleGenerator = function( array, times){
-  let index = 0;
-  return ()=>array[(Math.floor((index++)/times))%array.length];
-}
-
 const isBetween = function( number1, number2, number3 ){
   return number1 <= number2 && number2 <= number3;
 }
@@ -42,7 +37,6 @@ module.exports = {
   getAdjacentNumbers,
   increment,
   createNumberSeries,
-  cycleGenerator,
   rowGenerator,
   createGrid,
   isBetween,
