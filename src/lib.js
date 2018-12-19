@@ -7,9 +7,8 @@ const {
 } = require('./libUtil.js');
 
 const neighbourValidator = function( bounds, cell ){
-  let { topLeft, bottomRight } = bounds;
-  let isValid = isBetween( topLeft[0], cell[0], bottomRight[0] );
-  return isValid && isBetween( topLeft[1], cell[1], bottomRight[1] );
+  let isValid = isBetween(bounds["topLeft"][0],cell[0],bounds["bottomRight"][0]);
+  return isValid && isBetween(bounds["topLeft"][1],cell[1],bounds["bottomRight"][1]);
 }
 
 const getAllNeighbour = function( position ){
@@ -20,9 +19,8 @@ const getAllNeighbour = function( position ){
 
 const getValidNeighbour = function(  bounds, position ){
   let isValid = neighbourValidator.bind( null, bounds );
-  let neighbours = getAllNeighbour( position );
-  if( bounds==Infinity ){ return neighbours };
-  return neighbours.filter( isValid );
+  let neighbours = getAllNeighbour( position ).filter( isValid );
+  return neighbours;
 }
 
 const willAlive = function( previousState, bounds, cell ){
@@ -36,20 +34,20 @@ const willAlive = function( previousState, bounds, cell ){
 
 const getWorld = function( ...size ){
   let xCoOrdinates = createNumberSeries( (size[1][0]-size[0][0]+1), size[0][0] );
-  let yCoOrdinates = createNumberSeries( (size[1][1]-size[0][1]+1), size[0][1] );
+  let yCoOrdinates = createNumberSeries( (size[1][1]-size[0][1]+1),size[0][1] );
   return zipArrays( [ xCoOrdinates, yCoOrdinates ] );
 }
 
 const getNextGeneration = function ( currentGeneration, bounds ){
-  let { topLeft, bottomRight } = bounds;
-  let world = getWorld( topLeft, bottomRight );
+  let world = getWorld( bounds["topLeft"], bounds["bottomRight"] );
   let testingAliveness = willAlive.bind( null, currentGeneration, bounds );
   return world.filter( testingAliveness );
 }
 
 const getNthGeneration = function( currentGeneration, bounds, n ){
   for( let index = 0; index < n; index++ ){
-    currentGeneration = getNextGeneration( currentGeneration, bounds );
+    let nextGeneration = getNextGeneration( currentGeneration, bounds );
+    currentGeneration = nextGeneration;
   }
   return currentGeneration;
 }
