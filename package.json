@@ -22,6 +22,7 @@
   "homepage": "https://github.com/STEP-tw/gol-swapnillothe#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "cookie-parser": "^1.4.4"
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4"
   }
 }
