@@ -1,20 +1,17 @@
-let cells = [[0, 1], [0, 1], [0, 2], [0, 2], [1, 4], [2, 2], [1, 2]];
-
-const makeCellLive = function(document, cell) {
-  cells.push(cell);
-  applyColour(document, cell);
+const makeCellLive = function(cell) {
+  fetch("/makecelllive", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ cell })
+  });
 };
 
 const applyColour = function(document, cell) {
   document.getElementById(cell.join(":")).className = "colored";
 };
 
-const applyPreferences = function(document, cells) {
-  cells.forEach(applyColour.bind(null, document));
-};
-
-const display = function(cells) {
-  alert(id);
+const applyPreferences = function(document, nextGenCells) {
+  nextGenCells.forEach(applyColour.bind(null, document));
 };
 
 const createTableBody = function(document, size) {
@@ -24,7 +21,7 @@ const createTableBody = function(document, size) {
     for (innerIndex = 0; innerIndex < size; innerIndex++) {
       let tdata = document.createElement("td");
       tdata.id = `${index}:${innerIndex}`;
-      tdata.onclick = makeCellLive.bind(null, document, [index, innerIndex]);
+      tdata.onclick = makeCellLive.bind(null, [index, innerIndex]);
       row.appendChild(tdata);
     }
     tbody.appendChild(row);
@@ -32,29 +29,33 @@ const createTableBody = function(document, size) {
   return tbody;
 };
 
-const loadTable = function(document, cells) {
+const loadTable = function(document, nextGenCells) {
   const container = document.getElementById("mainContainer");
   container.innerText = null;
   const table = document.createElement("table");
   const tbody = createTableBody(document, 15);
   table.appendChild(tbody);
   container.appendChild(table);
-  applyPreferences(document, cells);
+  applyPreferences(document, nextGenCells);
+};
+
+const intializeGame = function() {
+  fetch("/getgame")
+    .then(res => res.json())
+    .then(game => {
+      loadTable(document, game.cells);
+      startGame();
+    });
 };
 
 const startGame = function() {
   setInterval(() => {
-    fetch("/getnextgen", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(cells)
-    })
+    fetch("/getgame")
       .then(res => res.json())
-      .then(nextGenCells => {
-        cells = nextGenCells;
-        loadTable(document, cells);
+      .then(game => {
+        loadTable(document, game.cells);
       });
   }, 1000);
 };
 
-window.onload = loadTable.bind(null, document, cells);
+window.onload = intializeGame;

@@ -40,7 +40,7 @@ const getWorld = function( ...size ){
   return zipArrays( [ xCoOrdinates, yCoOrdinates ] );
 }
 
-const getNextGeneration = function ( currentGeneration, bounds ){
+const nextGeneration = function ( currentGeneration, bounds ){
   let { topLeft, bottomRight } = bounds;
   let world = getWorld( topLeft, bottomRight );
   let testingAliveness = willAlive.bind( null, currentGeneration, bounds );
@@ -49,7 +49,7 @@ const getNextGeneration = function ( currentGeneration, bounds ){
 
 const getNthGeneration = function( currentGeneration, bounds, n ){
   for( let index = 0; index < n; index++ ){
-    currentGeneration = getNextGeneration( currentGeneration, bounds );
+    currentGeneration = nextGeneration( currentGeneration, bounds );
   }
   return currentGeneration;
 }
@@ -60,6 +60,6 @@ module.exports = {
   getValidNeighbour,
   willAlive,
   getWorld,
-  getNextGeneration,
+  nextGeneration,
   getNthGeneration
 }

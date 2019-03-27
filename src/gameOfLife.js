@@ -1,7 +1,23 @@
-const { getNextGeneration } = require('./lib.js');
+const { nextGeneration } = require("./lib.js");
 
-const nextGeneration = function(currGeneration,bounds) {
-  return getNextGeneration( currGeneration, bounds );
+class Game {
+  constructor(cells, bounds) {
+    this.cells = cells;
+    this.bounds = bounds;
+  }
+
+  getNextGeneration() {
+    this.cells = nextGeneration(this.cells, this.bounds);
+    return this.cells;
+  }
+
+  getCells() {
+    return this.cells;
+  }
+
+  makeCellLive(cell) {
+    this.cells.push(cell);
+  }
 }
 
-module.exports = { nextGeneration };
+module.exports = { nextGeneration, Game };

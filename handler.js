@@ -1,16 +1,28 @@
-const { nextGeneration } = require("./src/gameOfLife.js");
-
-const getNextGeneration = function(req, res) {
-  const cells  = req.body;
-  const nextGenerationCells = nextGeneration(cells,{topLeft: [0,0], bottomRight: [100,100]});
-  const nextGenerationCell =  JSON.stringify(nextGenerationCells);
-  res.send(nextGenerationCell);
+const getGame = function(req, res) {
+  const game = req.app.game;
+  game.getNextGeneration();
+  res.send(JSON.stringify(game));
 };
 
 const renderHome = function(req, res) {
   res.redirect("/index.html");
 };
+
+const consoleReq = function(req, res, next) {
+  console.log(req.url, "this is req");
+  next();
+};
+
+const makeCellLive = function(req, res) {
+  const { cell } = req.body;
+  const game = req.app.game;
+  game.makeCellLive(cell);
+  res.end();
+};
+
 module.exports = {
-  getNextGeneration,
-  renderHome
+  getGame,
+  renderHome,
+  consoleReq,
+  makeCellLive
 };
