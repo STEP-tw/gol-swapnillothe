@@ -2,7 +2,6 @@ const {
   isBetween,
   getAdjacentNumbers,
   contains,
-  createNumberSeries,
   zipArrays
 } = require('./libUtil.js');
 
@@ -34,32 +33,10 @@ const willAlive = function( previousState, bounds, cell ){
   return aliveConditions[ aliveSubConditions[ aliveNeighboursNo ] ];
 }
 
-const getWorld = function( ...size ){
-  let xCoOrdinates = createNumberSeries( (size[1][0]-size[0][0]+1), size[0][0] );
-  let yCoOrdinates = createNumberSeries( (size[1][1]-size[0][1]+1), size[0][1] );
-  return zipArrays( [ xCoOrdinates, yCoOrdinates ] );
-}
-
-const nextGeneration = function ( currentGeneration, bounds ){
-  let { topLeft, bottomRight } = bounds;
-  let world = getWorld( topLeft, bottomRight );
-  let testingAliveness = willAlive.bind( null, currentGeneration, bounds );
-  return world.filter( testingAliveness );
-}
-
-const getNthGeneration = function( currentGeneration, bounds, n ){
-  for( let index = 0; index < n; index++ ){
-    currentGeneration = nextGeneration( currentGeneration, bounds );
-  }
-  return currentGeneration;
-}
 
 module.exports = {
   getAllNeighbour,
   neighbourValidator,
   getValidNeighbour,
   willAlive,
-  getWorld,
-  nextGeneration,
-  getNthGeneration
 }
