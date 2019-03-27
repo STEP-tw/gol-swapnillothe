@@ -1,0 +1,11 @@
+table,td,tr{
+  border: 1px solid black;
+}
+td{
+  width:40px;
+  height:40px;
+}
+
+.colored{
+  background: rgb(92, 236, 63);
+}
