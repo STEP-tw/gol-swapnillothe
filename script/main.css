@@ -1,11 +1,30 @@
-table,td,tr{
+table,
+td,
+tr {
   border: 1px solid black;
 }
-td{
-  width:40px;
-  height:40px;
+td {
+  width: 40px;
+  height: 40px;
 }
 
-.colored{
+.colored {
   background: rgb(92, 236, 63);
 }
+
+.cell {
+  background: rgb(164, 233, 182);
+  -webkit-animation: mymove 5s infinite;
+  animation: mymove 5s infinite;
+}
+
+@-webkit-keyframes mymove {
+  from {background-color: red;}
+  to {background-color: white ;}
+}
+
+@keyframes mymove {
+  from {background-color: rgb(164, 233, 182);}
+  to {background-color: white;}
+}
+

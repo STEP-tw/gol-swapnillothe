@@ -7,7 +7,7 @@ const increment = function( number=0 ){
 }
 
 const createNumberSeries = function( limit, startingNumber=0 ){
-  let series = new Array( limit ).fill( "" );
+  const series = new Array( limit ).fill( "" );
   return series.map( increment( startingNumber ) );
 }
 

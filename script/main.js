@@ -1,4 +1,5 @@
 const makeCellLive = function(cell) {
+  document.getElementById(cell.join(":")).className = "cell";
   fetch("/makecelllive", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
